@@ -1,0 +1,6 @@
+image/
+sound/
+node_modules/
+
+prototype.js
+.env
