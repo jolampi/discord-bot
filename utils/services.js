@@ -3,7 +3,7 @@ const services = []
 
 module.exports = {
     serviceTypes: [
-        'message'
+        'message',
     ],
     setService: (service, value) => {
         services[service] = value ? true : false

@@ -1,6 +1,5 @@
-const Discord = require('discord.js')
 
-const helloAction = async (message, args) => {
+const helloAction = async (message) => {
     await message.channel.send(`Hello ${message.author}!`)
 }
 

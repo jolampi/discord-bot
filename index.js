@@ -7,7 +7,7 @@ const services = require('./utils/services')
 const help = {
     description: 'Displays this message',
     type: 'production',
-    action: (message, args) => {
+    action: (message) => {
         let result = 'Available commands:\n'
         for (const [key, value] of commands) {
             result = result.concat(`${key} - ${value.description}\n`)
@@ -18,8 +18,8 @@ const help = {
 }
 
 const commands = new Map()
-commands.set('!hello', {...require('./controllers/hello').hello, type: 'message' })
-commands.set('!status', {...require('./controllers/status').status, type: 'production'})
+commands.set('!hello', { ...require('./controllers/hello').hello, type: 'message' })
+commands.set('!status', { ...require('./controllers/status').status, type: 'production' })
 commands.set('!help', help)
 
 client.on('ready', () => {
