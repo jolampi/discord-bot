@@ -4,9 +4,11 @@ const client = new Discord.Client()
 const logger = require('./utils/logger')
 const services = require('./utils/services')
 
+logger.log(`Starting in ${config.PRODUCTION ? 'production' : 'development'} mode`)
+
 const help = {
     description: 'Displays this message',
-    type: 'production',
+    type: 'essential',
     action: (message) => {
         let result = 'Available commands:\n'
         for (const [key, value] of commands) {
@@ -19,7 +21,7 @@ const help = {
 
 const commands = new Map()
 commands.set('!hello', { ...require('./controllers/hello').hello, type: 'message' })
-commands.set('!status', { ...require('./controllers/status').status, type: 'production' })
+commands.set('!status', { ...require('./controllers/status').status, type: 'essential' })
 commands.set('!help', help)
 
 client.on('ready', () => {
@@ -30,10 +32,8 @@ client.on('message', async (message) => {
     const [command, ...args] = message.content.split(/\s+/)
     if (command.match(/^!\w+/) && commands.has(command)) {
         const c = commands.get(command)
-        if (
-            (!config.PRODUCTION && c.type === 'production') ||
-            (config.PRODUCTION && c.type !== 'production' && !services.getService(c.type))
-        ) { return }
+        if (c.type !== 'essential' && !services.getService(message.guild, c.type)) { return }
+
         try {
             logger.log(message.author.tag, command.substring(1).toUpperCase(), args)
             c.action(message, args)
