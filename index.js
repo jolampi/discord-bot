@@ -22,6 +22,7 @@ const help = {
 const commands = new Map()
 commands.set('!hello', { ...require('./controllers/hello').hello, type: 'message' })
 commands.set('!status', { ...require('./controllers/status').status, type: 'essential' })
+commands.set('!random', { ...require('./controllers/random').random, type: 'message' })
 commands.set('!help', help)
 
 client.on('ready', () => {
@@ -35,7 +36,7 @@ client.on('message', async (message) => {
         if (c.type !== 'essential' && !services.getService(message.guild, c.type)) { return }
 
         try {
-            logger.log(message.author.tag, command.substring(1).toUpperCase(), args)
+            logger.log(message.author.tag, command.substring(1).toUpperCase(), args.join(' '))
             c.action(message, args)
         } catch(exception) {
             logger.error(exception)
