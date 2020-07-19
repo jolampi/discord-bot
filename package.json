@@ -11,13 +11,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.2",
     "eslint": "^6.7.2",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.4"
   },
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "opusscript": "0.0.7"
   }
