@@ -7,14 +7,31 @@ import { Command } from "./commands";
 dotenv.config();
 const PREFIX = process.env.NODE_ENV === "production" ? "!" : "d!";
 
+const helpUsage = `help [COMMAND]
+
+COMMAND:
+  (void)  Shows list of avaiable commands.
+  (cmd)   Describes how to use given command.
+`;
+
 const help: command.Command = {
   command: "help",
   description: "Shows this menu",
-  handler: async (message) => {
-    const mapped = Array.from(cmds.entries()).map(([k, v]) => `${k} - ${v.description}`);
-    const mes = `Available commands:\n${mapped.join("\n")}`;
-    message.channel.send("```" + mes + "```");
+  handler: async (message, args) => {
+    if (args.length === 0) {
+      const mapped = Array.from(cmds.entries()).map(([k, v]) => `${k} - ${v.description}`);
+      const mes = `Available commands:\n${mapped.join("\n")}`;
+      message.channel.send("```" + mes + "```");
+    } else {
+      const command = cmds.get(args[0])
+      if (command) {
+        message.channel.send("```" + PREFIX + command.usage + "```");
+      } else {
+        message.reply(`Use ${PREFIX}help ${PREFIX}help to get help with using help!`);
+      }
+    }
   },
+  usage: helpUsage,
 }
 
 const cmds = new Map<string, Command>([ [PREFIX + "help", help] ]);

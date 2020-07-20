@@ -56,10 +56,22 @@ const handler: Command["handler"] = async (message, args) => {
   };
 };
 
+const usage = `random [KIND]...
+Generates random numbers and items in various ways.
+
+KIND:
+  (void)  Random number between 0 and 1.
+  XdY     Rolls X dice of Y sides each.
+  X-Y     Generates a random integer between X and Y.
+  coin    Flips a coin.
+  (other) Picks one from a list of provided items.
+`;
+
 const command: Command = {
   command: "random",
   description: "Get random number, coinflip or item",
   handler,
+  usage,
 };
 
 export default command;
