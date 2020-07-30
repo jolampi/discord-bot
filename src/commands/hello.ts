@@ -1,6 +1,6 @@
-import { Command } from "./types";
+import { Command, CommandHandler } from "./types";
 
-const handler: Command["handler"] = async (message) => {
+const handler: CommandHandler = async (message) => {
   message.channel.send(`Hello ${message.author}!`);
 };
 

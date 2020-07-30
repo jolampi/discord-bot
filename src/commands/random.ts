@@ -1,6 +1,6 @@
-import { Command } from "./types";
+import { Command, CommandHandler } from "./types";
 
-const handler: Command["handler"] = async (message, args) => {
+const handler: CommandHandler = async (message, args) => {
   const result = new Map<string, string[]>();
   const filtered: string[] = [];
 
