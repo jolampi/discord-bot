@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { TextChannel, User } from "discord.js";
 import { IMock, Mock } from "typemoq";
 
-import Diplomacy from "../../managers/diplomacy";
+import Diplomacy from "../../managers/Diplomacy";
 
 describe("Diplomacy", function () {
   const createUser = (id: string, username: string): [User, IMock<User>] => {

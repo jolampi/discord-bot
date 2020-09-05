@@ -1,6 +1,6 @@
-import { User, TextChannel, DMChannel } from "discord.js";
+import { TextChannel, DMChannel } from "discord.js";
 
-import Diplomacy from "../managers/diplomacy";
+import Diplomacy from "../managers/Diplomacy";
 
 import { Command, CommandHandler } from "./types";
 
