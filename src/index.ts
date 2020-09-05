@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import * as dotenv from "dotenv";
 
-import { Command, hello, help, random } from "./commands";
+import { diplomacy, Command, hello, help, random } from "./commands";
 
 dotenv.config();
 const PREFIX = process.env.NODE_ENV === "production" ? "!" : "d!";
@@ -10,6 +10,7 @@ const PREFIX_LENGTH = PREFIX.length;
 const commands = new Map<string, Command>();
 const addCommand = (c: Command) => commands.set(c.command, c);
 
+addCommand(diplomacy);
 addCommand(hello);
 addCommand(help({ getCommands: () => Array.from(commands.values()), prefix: PREFIX }));
 addCommand(random);
@@ -27,7 +28,7 @@ client.on("message", (message) => {
   };
 
   const [command, ...args] = message.content.substring(PREFIX_LENGTH).split(/\s+/);
-  console.log(command, args);
+  // console.log(command, args);
   commands.get(command)?.handler(message, args);
 });
 

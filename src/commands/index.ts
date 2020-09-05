@@ -1,3 +1,4 @@
+import diplomacy from "./diplomacy";
 import hello from "./hello";
 import help from "./help";
 import random from "./random";
@@ -7,6 +8,7 @@ export {
   Command,
   CommandHandler,
   CommandProvider,
+  diplomacy,
   hello,
   help,
   random,
