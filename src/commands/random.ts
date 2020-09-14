@@ -14,32 +14,32 @@ const handler: CommandHandler = async (message, args) => {
       results.push(Math.floor(1 + Math.random() * sides));
     }
     return results;
-  }
+  };
 
-  args.forEach(arg => {
+  args.forEach((arg) => {
     let match: RegExpMatchArray | null;
-    if (match = arg.match(/(\d+)d(\d+)/i)) {
+    if ((match = arg.match(/(\d+)d(\d+)/i))) {
       const subresult = throwDice(parseInt(match[1]), parseInt(match[2]));
       if (subresult.length > 0) {
-        addToResults(arg, subresult.join('-'))
+        addToResults(arg, subresult.join("-"));
       }
-    } else if (match = arg.match(/(\d+)-(\d+)/)) {
+    } else if ((match = arg.match(/(\d+)-(\d+)/))) {
       const min = parseInt(match[1]);
       const max = parseInt(match[2]);
       addToResults(arg, `${min + Math.floor(Math.random() * (max - min + 1))}`);
-    } else if (match = arg.match(/coin/i)) {
-      addToResults('coins', Math.random() < 0.5 ? 'heads' : 'tails');
+    } else if ((match = arg.match(/coin/i))) {
+      addToResults("coins", Math.random() < 0.5 ? "heads" : "tails");
     } else {
       filtered.push(arg);
     }
   });
 
   if (filtered.length > 0) {
-    const item = filtered[Math.floor(Math.random() * filtered.length)]
-    addToResults(`[${filtered.join(',')}]`, item)
-  };
+    const item = filtered[Math.floor(Math.random() * filtered.length)];
+    addToResults(`[${filtered.join(",")}]`, item);
+  }
 
-  switch(result.size) {
+  switch (result.size) {
     case 0:
       message.reply(`${Math.random()}`);
       break;
@@ -48,12 +48,11 @@ const handler: CommandHandler = async (message, args) => {
       break;
     default:
       message.reply(
-        Array
-          .from(result.keys())
-          .map(key => `\n${key}: ${result.get(key)?.join(', ')}`)
-          .join(''),
+        Array.from(result.keys())
+          .map((key) => `\n${key}: ${result.get(key)?.join(", ")}`)
+          .join("")
       );
-  };
+  }
 };
 
 const usage = `random [KIND]...

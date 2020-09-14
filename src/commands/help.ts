@@ -8,8 +8,8 @@ COMMAND:
 `;
 
 interface ProviderArgs {
-  getCommands: () => Command[],
-  prefix: string,
+  getCommands: () => Command[];
+  prefix: string;
 }
 
 const provider: CommandProvider<ProviderArgs> = ({ getCommands, prefix }) => {
@@ -17,26 +17,25 @@ const provider: CommandProvider<ProviderArgs> = ({ getCommands, prefix }) => {
     const commands = getCommands();
 
     if (args.length === 0) {
-      const mapped = commands
-        .map(c => `${c.command} - ${c.description}`);
+      const mapped = commands.map((c) => `${c.command} - ${c.description}`);
       const msg = `Available commands:\n${mapped.join("\n")}`;
       message.channel.send("```" + msg + "```");
     } else {
-      const command = commands.find(c => c.command === args[0]);
+      const command = commands.find((c) => c.command === args[0]);
       if (command) {
         message.channel.send("```" + command.usage + "```");
       } else {
         message.reply(`Use ${prefix}help help to get help with using help!`);
       }
     }
-  }
+  };
 
   return {
     command: "help",
     description: "Shows this menu",
     handler,
     usage: USAGE,
-  }
+  };
 };
 
 export default provider;

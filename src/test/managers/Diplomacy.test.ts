@@ -7,19 +7,17 @@ import Diplomacy from "../../managers/Diplomacy";
 describe("Diplomacy", function () {
   const createUser = (id: string, username: string): [User, IMock<User>] => {
     const user = Mock.ofType<User>();
-    user.setup(x => x.id).returns(() => id);
-    user.setup(x => x.username).returns(() => username);
+    user.setup((x) => x.id).returns(() => id);
+    user.setup((x) => x.username).returns(() => username);
     return [user.object, user];
-  }
+  };
 
   let channel: TextChannel;
   let channelMock: IMock<TextChannel>;
-  let userMock: IMock<User>;
 
   beforeEach(function () {
     channelMock = Mock.ofType<TextChannel>();
     channel = channelMock.object;
-    userMock = Mock.ofType<User>();
   });
 
   it("should prevent adding more players than capacity", function () {
@@ -67,7 +65,7 @@ describe("Diplomacy", function () {
     const [userB] = createUser("B", "B");
     diplomacy.addPlayer(userB, "B");
     diplomacy.setOrders(userB, "B");
-    
+
     expect(diplomacy.getCurrentOrders()).to.be.equal(2);
     expect(diplomacy.getCurrentVotes()).to.be.equal(0);
     diplomacy.voteForReveal(userA);

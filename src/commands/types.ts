@@ -15,8 +15,4 @@ interface CommandProvider<T> {
   (t: T): Command;
 }
 
-export {
-  Command,
-  CommandHandler,
-  CommandProvider,
-};
+export { Command, CommandHandler, CommandProvider };

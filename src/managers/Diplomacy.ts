@@ -66,7 +66,9 @@ class Diplomacy {
     const votes = this.votesToReveal.length;
     const requiredVotes = Math.ceil(0.75 * this.maxPlayers);
     if (this.votesToReveal.length < requiredVotes) {
-      this.channel.send(`${requiredVotes - votes} more votes required for reveal.`)
+      this.channel.send(
+        `${requiredVotes - votes} more votes required for reveal.`
+      );
     } else {
       this.revealOrders();
     }
@@ -76,21 +78,19 @@ class Diplomacy {
     this.channel.send(`
 ${this.getPlayerCount()}/${this.maxPlayers} players
 ${this.getCurrentOrders()}/${this.maxPlayers} orders given
-${this.getCurrentVotes()}/${this.maxPlayers} votes`)
+${this.getCurrentVotes()}/${this.maxPlayers} votes`);
   }
 
   private revealOrders(): void {
-    const orders = Array
-      .from(this.playersToOrders.entries())
-      .map(([id, commands]) =>
-        commands
-          ? `\n${this.players.get(id)?.state}: ${commands}\n`
-          : "",
-      )
+    const orders = Array.from(
+      this.playersToOrders.entries()
+    ).map(([id, commands]) =>
+      commands ? `\n${this.players.get(id)?.state}: ${commands}\n` : ""
+    );
     this.channel.send(`Results of this round: ${shuffle(orders).join("")}`);
     this.playersToOrders.clear();
     this.votesToReveal = [];
   }
 }
 
-export default Diplomacy
+export default Diplomacy;

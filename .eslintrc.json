@@ -1,0 +1,50 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier/@typescript-eslint"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "arrow-spacing": ["error", { "before": true, "after": true }],
+    "eol-last": ["error", "always"],
+    "eqeqeq": "error",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        },
+        "groups": [["builtin", "external"], "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "linebreak-style": ["error", "unix"],
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"]
+  },
+  "overrides": [
+    {
+      "files": ["*.d.ts", "*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars-experimental": "error"
+      }
+    }
+  ]
+}

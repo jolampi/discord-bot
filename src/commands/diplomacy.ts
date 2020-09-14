@@ -17,7 +17,7 @@ COMMAND:
   orders [any]  Give orders for the round (only available via PM).
   reveal        Vote to reveal orders.
   end           Ends game.
-`
+`;
 
 const handler: CommandHandler = async (message, messageArgs) => {
   const { channel, author } = message;
@@ -34,7 +34,7 @@ const handler: CommandHandler = async (message, messageArgs) => {
   } else if (!(channel instanceof TextChannel)) {
     return;
   }
-  
+
   if (!diplomacy && subcommand === "start") {
     const players = parseInt(rest[0]);
     if (isNaN(players)) {
@@ -50,7 +50,7 @@ const handler: CommandHandler = async (message, messageArgs) => {
     return;
   }
 
-  switch(subcommand) {
+  switch (subcommand) {
     case "join": {
       const state: string | undefined = rest[0];
       if (!state) {
@@ -70,13 +70,13 @@ const handler: CommandHandler = async (message, messageArgs) => {
       channelId = undefined;
       break;
   }
-}
+};
 
 const command: Command = {
   command: "diplomacy",
   description: "Host diplomacy orders",
   handler,
   usage,
-}
+};
 
 export default command;
