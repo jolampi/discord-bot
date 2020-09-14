@@ -52,8 +52,10 @@
   },
   "lint-staged": {
     "*.{js,json,jsx,d.ts,ts,tsx}": [
-      "prettier --check",
       "eslint --cache --ignore-pattern '!.*' --max-warnings 0"
+    ],
+    "*.{js,json,jsx,d.ts,ts,tsx,yml}": [
+      "prettier --check"
     ]
   }
 }
