@@ -1,27 +1,29 @@
 import { Client } from "discord.js";
 import * as dotenv from "dotenv";
 
-import { diplomacy, Command, hello, help, random } from "./commands";
+import { Command, hello, help, leave, play, random, stop } from "./commands";
+import VoiceConnectionManager from "./managers/VoiceConnectionManager";
 
 dotenv.config();
 const PREFIX = process.env.NODE_ENV === "production" ? "!" : "d!";
 const PREFIX_LENGTH = PREFIX.length;
 
+const client = new Client();
+const voiceConnectionManager = new VoiceConnectionManager(client);
+
 const commands = new Map<string, Command>();
 const addCommand = (c: Command) => commands.set(c.command, c);
-
-addCommand(diplomacy);
 addCommand(hello);
 addCommand(
   help({ getCommands: () => Array.from(commands.values()), prefix: PREFIX })
 );
+addCommand(leave({ voiceConnectionManager }));
+addCommand(play({ voiceConnectionManager }));
 addCommand(random);
-
-const client = new Client();
+addCommand(stop({ voiceConnectionManager }));
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user?.tag}`);
-  // client.user?.setActivity("Doubling money", { type: "PLAYING" });
 });
 
 client.on("message", (message) => {
