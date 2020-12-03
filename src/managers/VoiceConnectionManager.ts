@@ -8,7 +8,7 @@ import {
 import internal from "stream";
 
 interface QueueEntry {
-  getDispatcher: () => internal.Readable;
+  getDispatcher: () => string | internal.Readable;
   title: string;
 }
 
@@ -110,3 +110,4 @@ class VoiceConnectionManager {
 }
 
 export default VoiceConnectionManager;
+export { QueueEntry };

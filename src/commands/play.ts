@@ -1,13 +1,20 @@
+import * as _ from "lodash";
 import ytdl from "ytdl-core";
 
-import VoiceConnectionManager from "../managers/VoiceConnectionManager";
+import VoiceConnectionManager, {
+  QueueEntry,
+} from "../managers/VoiceConnectionManager";
 
 import { CommandHandler, CommandProvider } from "./types";
+
+const DOTA_SOUND_BASE_URL =
+  "https://static.wikia.nocookie.net/dota2_gamepedia/images/";
+const YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
 
 const usage = `play [URL]
 Plays song from youtube link.
 
-URL: Youtube url
+URL: Youtube or Dota wiki url
 `;
 
 interface ProviderArgs {
@@ -28,20 +35,28 @@ const provider: CommandProvider<ProviderArgs> = ({
       return;
     }
 
-    if (args[0].startsWith("https://www.youtube.com/watch?v=")) {
-      const getDispatcher = () =>
-        ytdl(args[0].split("&")[0], {
-          quality: "highestaudio",
-          highWaterMark: 1 << 25,
-        });
-      const title = (await ytdl.getBasicInfo(args[0])).videoDetails.title;
-
+    const addToQueue = async (entry: QueueEntry): Promise<void> => {
       if (!voiceConnectionManager.isOnChannel) {
         await voiceConnectionManager.joinChannel(channel);
       }
 
-      console.log("Adding", title, "to queue");
-      voiceConnectionManager.addDispatcherToQueue({ getDispatcher, title });
+      voiceConnectionManager.addDispatcherToQueue(entry);
+    };
+
+    for (const arg of args) {
+      if (arg.startsWith(YOUTUBE_BASE_URL)) {
+        const getDispatcher = () =>
+          ytdl(args[0].split("&")[0], {
+            quality: "highestaudio",
+            highWaterMark: 1 << 25,
+          });
+        const title = (await ytdl.getBasicInfo(args[0])).videoDetails.title;
+        addToQueue({ getDispatcher, title });
+      } else if (arg.startsWith(DOTA_SOUND_BASE_URL)) {
+        const getDispatcher = () => arg;
+        const title = arg.split("?")[0].split("/")[7] ?? "???";
+        addToQueue({ getDispatcher, title });
+      }
     }
   };
 
