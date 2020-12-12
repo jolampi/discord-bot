@@ -16,7 +16,7 @@
     "tsc": "tsc"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/lodash": "^4.14.165",
