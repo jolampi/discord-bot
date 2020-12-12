@@ -17,7 +17,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
+      - name: Restore node_modules from cache
+        id: restore-cache
+        uses: actions/cache@v2
+        env:
+          cache-name: node-modules-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+      - name: npm ci
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Lint
         run: |
           npm run eslint-check
